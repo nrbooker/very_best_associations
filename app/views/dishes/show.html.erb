@@ -9,8 +9,66 @@
       <dd><%= @dish.name %></dd>
 
       <dt>Cuisine</dt>
-      <dd><%= @dish.cuisine_id %></dd>
+      <dd><%= @dish.cuisine.name %></dd>
 
+         <dt>Favorites</dt>
+      <dd><ul class="list-group">
+      <% @dish.favorites.each do |favorite| %>
+      <li class="list-group-item">
+      <%= favorite.venue.name %> by <%= favorite.user.username %>
+      </li>
+      <% end %>
+
+      <form action="/create_favorite" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+         <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :username, @favorite.user_id), :class=>"form-control")%>
+      </div>
+
+      <!-- Label and input for dish_id -->
+      <div class="form-group">
+        <label for="dish_id" class="control-label">
+          Dish
+        </label>
+
+         <%= select_tag(:dish_id, options_from_collection_for_select(Dish.all, :id, :name, @favorite.dish_id), :class=>"form-control")%>
+
+      </div>
+
+      <!-- Label and input for venue_id -->
+      <div class="form-group">
+        <label for="venue_id" class="control-label">
+          Venue
+        </label>
+        <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name, @favorite.venue_id), :class=>"form-control")%>
+
+      </div>
+
+      <!-- Label and input for notes -->
+      <div class="form-group">
+        <label for="notes" class="control-label">
+          Notes
+        </label>
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @favorite.notes %></textarea>
+      </div>
+
+      <button class="btn btn-success">
+        Create Favorite
+      </button>
+      or
+      <a href="/favorites">Cancel</a>
+    </form>
+      </ul>
+
+
+
+      </dd>
     </dl>
 
     <div class="btn-group btn-group-justified">

@@ -5,6 +5,7 @@ class DishesController < ApplicationController
 
   def show
     @dish = Dish.find(params[:id])
+    @favorite = Favorite.new
   end
 
   def new

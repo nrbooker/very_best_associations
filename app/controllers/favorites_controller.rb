@@ -9,6 +9,8 @@ class FavoritesController < ApplicationController
 
   def new
     @favorite = Favorite.new
+    @favorite.dish_id = params[:dish_id]
+
   end
 
   def create

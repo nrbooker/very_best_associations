@@ -5,10 +5,13 @@ class VenuesController < ApplicationController
 
   def show
     @venue = Venue.find(params[:id])
+    @favorite = Favorite.new
   end
 
   def new
     @venue = Venue.new
+    @venue.neighborhood_id = params[:neighborhood_id]
+
   end
 
   def create
